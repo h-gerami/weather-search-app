@@ -7,7 +7,7 @@ import ReduxThunk from 'redux-thunk';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['loading'],
+  blacklist: ['loading,err'],
 };
 const persistedReducer = persistReducer(persistConfig, reducers);
 

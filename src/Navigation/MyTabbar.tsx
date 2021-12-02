@@ -1,13 +1,14 @@
 import React from 'react';
 import {View, TouchableOpacity, Image, StyleSheet} from 'react-native';
-import {CColor, wp} from '../styles/CustomStyle';
+import {CColor, isPortrait, wp} from '../styles/CustomStyle';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export function MyTabBar({state, descriptors, navigation}: any) {
+  const icoSize = isPortrait() ? wp(6) : wp(2.5);
   return (
-    <View style={styles.container}>
+    <View style={[isPortrait() ? styles.container : styles.containerLandscape]}>
       <Image
-        style={styles.tabbarImg}
+        style={[isPortrait() ? styles.tabbarImg : styles.tabbarImgLandscape]}
         source={require('../../assets/images/tabbar.png')}
       />
       {state.routes.map(
@@ -49,32 +50,36 @@ export function MyTabBar({state, descriptors, navigation}: any) {
               testID={options.tabBarTestID}
               onPress={onPress}
               onLongPress={onLongPress}
-              style={styles.iconButtonWrapper}>
+              style={[
+                isPortrait()
+                  ? styles.iconButtonWrapper
+                  : styles.iconButtonWrapperLandscape,
+              ]}>
               {label === 'Overview' && (
                 <Icon
                   name="view-grid-outline"
-                  size={wp(6)}
+                  size={icoSize}
                   color={isFocused ? CColor.black : CColor.gray}
                 />
               )}
-              {label === 'Wallet' && (
+              {label === 'City' && (
                 <Icon
-                  name="wallet-outline"
-                  size={wp(6)}
+                  name="city"
+                  size={icoSize}
                   color={isFocused ? CColor.black : CColor.gray}
                 />
               )}
-              {label === 'Trade' && (
+              {label === 'Statistics' && (
                 <Icon
-                  name="waveform"
-                  size={wp(6)}
+                  name="chart-areaspline"
+                  size={icoSize}
                   color={isFocused ? CColor.black : CColor.gray}
                 />
               )}
               {label === 'Setting' && (
                 <Icon
                   name="cog-outline"
-                  size={wp(6)}
+                  size={icoSize}
                   color={isFocused ? CColor.black : CColor.gray}
                 />
               )}
@@ -88,9 +93,15 @@ export function MyTabBar({state, descriptors, navigation}: any) {
                 testID={options.tabBarTestID}
                 onPress={onPress}
                 onLongPress={onLongPress}
-                style={styles.centerButtonWrapper}>
+                style={[
+                  isPortrait()
+                    ? styles.centerButtonWrapper
+                    : styles.centerButtonWrapperLandscape,
+                ]}>
                 <Image
-                  style={styles.centerImg}
+                  style={[
+                    isPortrait() ? styles.centerImg : styles.centerImgLandscape,
+                  ]}
                   source={require('../../assets/images/homeButton.png')}
                 />
               </TouchableOpacity>
@@ -110,9 +121,25 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
+  containerLandscape: {
+    flexDirection: 'row',
+    height: wp(7),
+    position: 'absolute',
+    bottom: 0,
+    left: wp(30),
+    right: 0,
+    width: wp(40),
+  },
   tabbarImg: {
     width: wp(100),
     height: wp(22),
+    resizeMode: 'contain',
+    position: 'absolute',
+    bottom: -wp(2),
+  },
+  tabbarImgLandscape: {
+    width: wp(40),
+    height: wp(11),
     resizeMode: 'contain',
     position: 'absolute',
     bottom: -wp(2),
@@ -126,11 +153,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  iconButtonWrapperLandscape: {
+    flex: 1,
+    // backgroundColor: 'red',
+    margin: wp(1),
+    height: wp(6),
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   centerImg: {
     height: wp(17),
     width: wp(17),
     resizeMode: 'contain',
   },
+  centerImgLandscape: {
+    height: wp(7),
+    width: wp(7),
+    resizeMode: 'contain',
+  },
+
   centerButtonWrapperContainer: {
     flex: 2,
     justifyContent: 'center',
@@ -139,5 +181,9 @@ const styles = StyleSheet.create({
   centerButtonWrapper: {
     position: 'absolute',
     bottom: wp(6),
+  },
+  centerButtonWrapperLandscape: {
+    position: 'absolute',
+    bottom: wp(2),
   },
 });

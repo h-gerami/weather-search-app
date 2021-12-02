@@ -1,57 +1,118 @@
+import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {Text} from 'react-native';
+import {Alert, FlatList, Image, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
-import {update_wallet, get_currency_rate, set_err} from '../../Redux/Actions';
-export interface MarketCapType {
-  id: string;
-  title: string;
-  total: string;
-  icon: string;
-}
+import {
+  CloadLoading,
+  InfoImage,
+  LazyLoadImage,
+  WeatherList,
+} from '../../common';
+import {set_weather, set_err} from '../../Redux/Actions';
+import {CColor, isPortrait} from '../../styles/CustomStyle';
+import {WeatherType} from '../../Types/types';
+import ListHeader from './ListHeader';
 
 export interface HomePageType {
-  update_wallet: (wallet: walletType) => void;
-  wallet: walletType;
+  weather: WeatherType;
   loading: boolean;
   err: string;
-  rates: object | any;
-  get_currency_rate: (base: string) => void;
-  set_err: (v: string) => void;
+  set_weather: (cityName: string) => void;
+  set_err: (err: string) => void;
 }
-
-export enum Cnames {
-  EUR = 'EUR',
-  USD = 'USD',
-  GBP = 'GBP',
-}
-export const cc: {[key: string]: Cnames} = Cnames;
 
 function Home(props: HomePageType) {
-  const {err, rates, get_currency_rate, wallet, set_err} = props;
-
-  return <Text>asd</Text>;
+  const {weather, loading, err, set_weather, set_err} = props;
+  const [city, setCity] = useState<string>('');
+  const hasWeather =
+    weather?.forecast?.forecastday &&
+    weather?.forecast?.forecastday?.length > 0;
+  const searchWeatherHandler = (cityName: string) => {
+    setCity(cityName);
+    set_weather(cityName);
+  };
+  useEffect(() => {
+    if (err) {
+      Alert.alert('Error', err, [
+        {
+          text: 'OK',
+          onPress: () => set_err(''),
+          style: 'cancel',
+        },
+      ]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [err]);
+  return (
+    <View
+      style={[
+        styles.container,
+        {flexDirection: isPortrait() || !hasWeather ? 'column' : 'row'},
+      ]}>
+      <View>
+        <ListHeader
+          searchForCity={(cityName: string) => searchWeatherHandler(cityName)}
+          location={weather?.location}
+          currentWeather={weather?.current}
+        />
+        {loading && <CloadLoading />}
+      </View>
+      {hasWeather ? (
+        <View style={styles.listWrapper}>
+          <FlatList
+            refreshing={loading}
+            onRefresh={() => searchWeatherHandler(city)}
+            showsVerticalScrollIndicator={false}
+            data={
+              weather?.forecast?.forecastday &&
+              weather?.forecast?.forecastday?.length > 0
+                ? weather.forecast.forecastday
+                : []
+            }
+            renderItem={({item}) => {
+              return <WeatherList dayData={item} />;
+            }}
+          />
+        </View>
+      ) : (
+        !loading && <InfoImage />
+      )}
+    </View>
+  );
 }
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 15,
+    paddingHorizontal: isPortrait() ? 15 : 50,
+    backgroundColor: CColor.bgColor,
+    paddingBottom: 80,
+  },
+  header: {
+    flex: 0,
+  },
+  listWrapper: {
+    flex: 1,
+    marginLeft: isPortrait() ? 0 : 15,
+  },
+});
 // Redux
 const mapStateToProps = (state: {
-  CurrencyReducer: {
-    wallet: walletType;
+  WeatherReducer: {
+    weather: WeatherType;
     loading: boolean;
     err: string;
-    rates: object;
   };
 }) => {
-  const {wallet, loading, err, rates} = state.CurrencyReducer;
+  const {weather, loading, err} = state.WeatherReducer;
   return {
-    wallet,
+    weather,
     loading,
     err,
-    rates,
   };
 };
 const mapDispatchToProps = {
-  update_wallet,
-  get_currency_rate,
+  set_weather,
   set_err,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

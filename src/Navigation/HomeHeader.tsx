@@ -1,15 +1,15 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {NotificationButton, ProfileButton} from '../common';
-import {CCFont, CColor, wp} from '../styles/CustomStyle';
+import {CCFont, CColor, isPortrait, wp} from '../styles/CustomStyle';
 export interface HomeHeaderType {}
 
 const HomeHeader = () => {
   return (
-    <View style={styles.container}>
+    <View style={[isPortrait() ? styles.container : styles.containerLandscape]}>
       <View>
         <Text style={styles.welcome}>Welcome</Text>
-        <Text style={styles.userName}>Hossein Gerami</Text>
+        <Text style={styles.userName}>Hipages Code Reviewer</Text>
       </View>
       <View style={styles.profileNotifWrapper}>
         <NotificationButton />
@@ -28,8 +28,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: wp(5),
   },
+  containerLandscape: {
+    height: wp(5),
+    backgroundColor: CColor.white,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 50,
+  },
   profileButton: {
-    marginLeft: wp(5),
+    marginLeft: 15,
   },
   profileNotifWrapper: {
     flexDirection: 'row',
@@ -37,15 +45,15 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontFamily: CCFont.medium,
-    fontSize: wp(4),
-    lineHeight: wp(4),
+    fontSize: 14,
+    lineHeight: 14,
     color: CColor.black,
-    marginBottom: wp(1),
+    marginBottom: 1,
   },
   userName: {
     fontFamily: CCFont.regular,
-    fontSize: wp(3),
-    lineHeight: wp(3),
+    fontSize: 12,
+    lineHeight: 12,
     color: CColor.black,
   },
 });

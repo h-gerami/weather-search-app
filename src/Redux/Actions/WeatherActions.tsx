@@ -1,12 +1,6 @@
 import {NETWORK_ERROR} from '../../global/Errors';
 import services from '../../global/Services';
-import {walletType} from '../../Types/types';
-import {
-  GET_CURRENCY_RATE,
-  SET_ERR,
-  SET_IS_LOADING,
-  UPDATE_WALLET,
-} from './types';
+import {SET_ERR, SET_IS_LOADING, SET_WEATHER} from './types';
 
 export const set_is_loading = (loading: boolean) => {
   return {
@@ -21,30 +15,37 @@ export const set_err = (err: string) => {
   };
 };
 
-export const update_wallet = (wallet: walletType) => {
-  return {
-    type: UPDATE_WALLET,
-    payload: wallet,
-  };
-};
-export const get_currency_rate = (base: string) => {
+export const set_weather = (cityName: string) => {
   return (dispatch: (value: any) => void) => {
     dispatch(set_is_loading(true));
+    dispatch({
+      type: SET_WEATHER,
+      payload: {},
+    });
     services
-      .GetRate(base)
+      .GetWeather(cityName)
       .then(res => {
-        if (res && res.data) {
-          dispatch({
-            type: GET_CURRENCY_RATE,
-            payload: res.data,
-          });
-        } else {
+        console.log(res, 'resss');
+
+        const error = res?.error;
+        if (error) {
           dispatch({
             type: SET_ERR,
-            payload: NETWORK_ERROR,
+            payload: error.message,
           });
+        } else {
+          if (res) {
+            dispatch({
+              type: SET_WEATHER,
+              payload: res,
+            });
+          } else {
+            dispatch({
+              type: SET_ERR,
+              payload: NETWORK_ERROR,
+            });
+          }
         }
-
         dispatch(set_is_loading(false));
       })
       .catch(err => {

@@ -3,10 +3,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../pages/home/Home';
 import Overview from '../pages/overview/Overview';
 import Setting from '../pages/setting/Setting';
-import Trade from '../pages/trade/Trade';
-import Wallet from '../pages/wallet/Wallet';
 import {MyTabBar} from './MyTabbar';
 import HomeHeader from './HomeHeader';
+import Statistics from '../pages/statistics/Statistics';
+import City from '../pages/city/City';
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
   return (
@@ -14,7 +14,7 @@ const Tabs = () => {
       tabBar={props => <MyTabBar {...props} />}
       initialRouteName="Home">
       <Tab.Screen name="Overview" component={Overview} />
-      <Tab.Screen name="Wallet" component={Wallet} />
+      <Tab.Screen name="City" component={City} />
       <Tab.Screen
         options={{
           header: () => <HomeHeader />,
@@ -22,7 +22,7 @@ const Tabs = () => {
         name="Home"
         component={Home}
       />
-      <Tab.Screen name="Trade" component={Trade} />
+      <Tab.Screen name="Statistics" component={Statistics} />
       <Tab.Screen name="Setting" component={Setting} />
     </Tab.Navigator>
   );

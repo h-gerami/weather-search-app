@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {CColor, wp} from '../../styles/CustomStyle';
+import {CColor} from '../../styles/CustomStyle';
 export interface ProfileButtonType {
   style?: object;
 }
@@ -21,16 +21,16 @@ const ProfileButton = (props: ProfileButtonType) => {
 export {ProfileButton};
 const styles = StyleSheet.create({
   container: {
-    width: wp(9),
-    height: wp(9),
+    width: 30,
+    height: 30,
     backgroundColor: CColor.lightGray,
     borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
   },
   imgContainer: {
-    width: wp(7),
-    height: wp(7),
+    width: 25,
+    height: 25,
     borderRadius: 100,
     overflow: 'hidden',
   },

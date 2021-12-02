@@ -2,12 +2,12 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {CColor, wp} from '../../styles/CustomStyle';
+import {CColor} from '../../styles/CustomStyle';
 const NotificationButton = () => {
   return (
     <TouchableOpacity style={[styles.container]}>
       <View style={styles.iconContainer}>
-        <Icon name="bell-outline" size={wp(5)} color={CColor.gray} />
+        <Icon name="bell-outline" size={15} color={CColor.gray} />
       </View>
       <View style={styles.dot} />
     </TouchableOpacity>
@@ -16,16 +16,16 @@ const NotificationButton = () => {
 export {NotificationButton};
 const styles = StyleSheet.create({
   container: {
-    width: wp(8),
-    height: wp(8),
+    width: 30,
+    height: 30,
     backgroundColor: CColor.lightGray,
     borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
   },
   iconContainer: {
-    width: wp(6),
-    height: wp(6),
+    width: 25,
+    height: 25,
     borderRadius: 100,
     overflow: 'hidden',
     justifyContent: 'center',

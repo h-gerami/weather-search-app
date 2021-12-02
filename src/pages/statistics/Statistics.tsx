@@ -1,14 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {CCFont, CColor, wp} from '../../styles/CustomStyle';
-const Wallet = () => {
+const Statistics = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.pageName}>Wallet</Text>
+      <Text style={styles.pageName}>Statistics</Text>
     </View>
   );
 };
-export default Wallet;
+export default Statistics;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

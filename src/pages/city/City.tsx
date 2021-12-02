@@ -1,14 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {CCFont, CColor, wp} from '../../styles/CustomStyle';
-const Trade = () => {
+const City = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.pageName}>Trade</Text>
+      <Text style={styles.pageName}>My favorite Cities :)</Text>
     </View>
   );
 };
-export default Trade;
+export default City;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,4 +1,4 @@
-import {API_EXCHANGE_PATH} from './Global';
+import {API_Dayly_Forecast_3_days_PATH} from './Global';
 
 function checkResponse(response: Response) {
   try {
@@ -9,16 +9,14 @@ function checkResponse(response: Response) {
 }
 
 class Services {
-  GetRate(base: string) {
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
+  GetWeather(cityName: string) {
+    // var myHeaders = new Headers();
+    // myHeaders.append('Content-Type', 'application/json');
     var requestOptions = {
       method: 'GET',
-      headers: myHeaders,
-      body: null,
       redirect: 'follow',
     };
-    return fetch(`${API_EXCHANGE_PATH}&base_currency=${base}`, requestOptions)
+    return fetch(API_Dayly_Forecast_3_days_PATH + cityName, requestOptions)
       .then(response => checkResponse(response))
       .catch(err => {
         console.log(err, 'network?');
