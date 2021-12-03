@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "margin": 20,
+    }
+  }
+>
+  <Image
+    source={
+      Object {
+        "testUri": "../../../assets/images/cload.png",
+      }
+    }
+    style={
+      Object {
+        "height": 100,
+        "resizeMode": "contain",
+        "width": 100,
+      }
+    }
+  />
+  <Text
+    style={
+      Object {
+        "color": "#1C3041",
+        "fontFamily": "SofiaProMedium",
+        "fontSize": 15,
+        "lineHeight": 20,
+        "margin": 20,
+        "textAlign": "center",
+      }
+    }
+  >
+    Please Enter your City Name and then Click the Search Button
+  </Text>
+  <Image
+    source={
+      Object {
+        "testUri": "../../../assets/images/sun.png",
+      }
+    }
+    style={
+      Object {
+        "height": 100,
+        "resizeMode": "contain",
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;

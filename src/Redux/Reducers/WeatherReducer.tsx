@@ -12,7 +12,7 @@ const isPortrait = () => {
   return dim.height >= dim.width;
 };
 
-export interface CurrencyReducerInitType {
+export interface WeatherReducerInitType {
   loading: boolean;
   err: string;
   weather: WeatherType | {};
@@ -22,7 +22,7 @@ export enum orientationEnum {
   portrait = 'portrait',
   landscape = 'landscape',
 }
-const INITIAL_STATE: CurrencyReducerInitType = {
+const INITIAL_STATE: WeatherReducerInitType = {
   loading: false,
   weather: {},
   err: '',
