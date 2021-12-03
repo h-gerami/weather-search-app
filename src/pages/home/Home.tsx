@@ -1,14 +1,9 @@
-import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {Alert, FlatList, Image, StyleSheet, Text, View} from 'react-native';
+import {Alert, Dimensions, FlatList, StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
-import {
-  CloadLoading,
-  InfoImage,
-  LazyLoadImage,
-  WeatherList,
-} from '../../common';
-import {set_weather, set_err} from '../../Redux/Actions';
+import {CloadLoading, InfoImage, WeatherList} from '../../common';
+import {set_weather, set_err, set_orientation} from '../../Redux/Actions';
+import {orientationEnum} from '../../Redux/Reducers/WeatherReducer';
 import {CColor, isPortrait} from '../../styles/CustomStyle';
 import {WeatherType} from '../../Types/types';
 import ListHeader from './ListHeader';
@@ -19,11 +14,28 @@ export interface HomePageType {
   err: string;
   set_weather: (cityName: string) => void;
   set_err: (err: string) => void;
+  orientation: string;
+  set_orientation: (orientation: string) => void;
 }
 
 function Home(props: HomePageType) {
-  const {weather, loading, err, set_weather, set_err} = props;
+  const {
+    weather,
+    loading,
+    err,
+    set_weather,
+    set_err,
+    set_orientation,
+    orientation,
+  } = props;
   const [city, setCity] = useState<string>('');
+
+  Dimensions.addEventListener('change', () => {
+    set_orientation(
+      isPortrait() ? orientationEnum.portrait : orientationEnum.landscape,
+    );
+  });
+
   const hasWeather =
     weather?.forecast?.forecastday &&
     weather?.forecast?.forecastday?.length > 0;
@@ -47,7 +59,13 @@ function Home(props: HomePageType) {
     <View
       style={[
         styles.container,
-        {flexDirection: isPortrait() || !hasWeather ? 'column' : 'row'},
+        {
+          flexDirection:
+            orientation === orientationEnum.portrait || !hasWeather
+              ? 'column'
+              : 'row',
+          paddingHorizontal: 15,
+        },
       ]}>
       <View>
         <ListHeader
@@ -58,7 +76,11 @@ function Home(props: HomePageType) {
         {loading && <CloadLoading />}
       </View>
       {hasWeather ? (
-        <View style={styles.listWrapper}>
+        <View
+          style={[
+            styles.listWrapper,
+            {marginLeft: orientation === orientationEnum.portrait ? 0 : 15},
+          ]}>
           <FlatList
             refreshing={loading}
             onRefresh={() => searchWeatherHandler(city)}
@@ -75,7 +97,9 @@ function Home(props: HomePageType) {
           />
         </View>
       ) : (
-        !loading && <InfoImage />
+        !loading && (
+          <InfoImage isPortrait={orientation === orientationEnum.portrait} />
+        )
       )}
     </View>
   );
@@ -84,7 +108,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    paddingHorizontal: isPortrait() ? 15 : 50,
+
     backgroundColor: CColor.bgColor,
     paddingBottom: 80,
   },
@@ -93,7 +117,6 @@ const styles = StyleSheet.create({
   },
   listWrapper: {
     flex: 1,
-    marginLeft: isPortrait() ? 0 : 15,
   },
 });
 // Redux
@@ -102,17 +125,20 @@ const mapStateToProps = (state: {
     weather: WeatherType;
     loading: boolean;
     err: string;
+    orientation: string;
   };
 }) => {
-  const {weather, loading, err} = state.WeatherReducer;
+  const {weather, loading, err, orientation} = state.WeatherReducer;
   return {
     weather,
     loading,
     err,
+    orientation,
   };
 };
 const mapDispatchToProps = {
   set_weather,
   set_err,
+  set_orientation,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

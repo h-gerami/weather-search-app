@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {ActivityIndicator} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {CColor} from '../../styles/CustomStyle';

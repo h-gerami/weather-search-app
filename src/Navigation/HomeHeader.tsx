@@ -1,12 +1,12 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {NotificationButton, ProfileButton} from '../common';
-import {CCFont, CColor, isPortrait, wp} from '../styles/CustomStyle';
+import {CCFont, CColor} from '../styles/CustomStyle';
 export interface HomeHeaderType {}
 
 const HomeHeader = () => {
   return (
-    <View style={[isPortrait() ? styles.container : styles.containerLandscape]}>
+    <View style={styles.container}>
       <View>
         <Text style={styles.welcome}>Welcome</Text>
         <Text style={styles.userName}>Hipages Code Reviewer</Text>
@@ -21,20 +21,12 @@ const HomeHeader = () => {
 export default HomeHeader;
 const styles = StyleSheet.create({
   container: {
-    height: wp(15),
     backgroundColor: CColor.white,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: wp(5),
-  },
-  containerLandscape: {
-    height: wp(5),
-    backgroundColor: CColor.white,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 50,
+    paddingHorizontal: 20,
+    height: 50,
   },
   profileButton: {
     marginLeft: 15,

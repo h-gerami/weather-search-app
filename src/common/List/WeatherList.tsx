@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, {useRef} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {LazyLoadImage} from '..';
-import {CCFont, CColor, isPortrait} from '../../styles/CustomStyle';
+import {CCFont, CColor} from '../../styles/CustomStyle';
 import {ForecastdayType} from '../../Types/types';
 import CardFlip from 'react-native-card-flip';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';

@@ -1,14 +1,32 @@
 import React from 'react';
 import {View, TouchableOpacity, Image, StyleSheet} from 'react-native';
-import {CColor, isPortrait, wp} from '../styles/CustomStyle';
+import {CColor} from '../styles/CustomStyle';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {connect} from 'react-redux';
+import {orientationEnum} from '../Redux/Reducers/WeatherReducer';
 
-export function MyTabBar({state, descriptors, navigation}: any) {
-  const icoSize = isPortrait() ? wp(6) : wp(2.5);
+const MyTabBar = (props: {
+  state: any;
+  descriptors: any;
+  navigation: any;
+  orientation: string;
+}) => {
+  const {state, descriptors, navigation, orientation} = props;
+
+  const icoSize = orientation === orientationEnum.portrait ? 25 : 25;
   return (
-    <View style={[isPortrait() ? styles.container : styles.containerLandscape]}>
+    <View
+      style={[
+        orientation === orientationEnum.portrait
+          ? styles.container
+          : styles.containerLandscape,
+      ]}>
       <Image
-        style={[isPortrait() ? styles.tabbarImg : styles.tabbarImgLandscape]}
+        style={[
+          orientation === orientationEnum.portrait
+            ? styles.tabbarImg
+            : styles.tabbarImgLandscape,
+        ]}
         source={require('../../assets/images/tabbar.png')}
       />
       {state.routes.map(
@@ -51,7 +69,7 @@ export function MyTabBar({state, descriptors, navigation}: any) {
               onPress={onPress}
               onLongPress={onLongPress}
               style={[
-                isPortrait()
+                orientation === orientationEnum.portrait
                   ? styles.iconButtonWrapper
                   : styles.iconButtonWrapperLandscape,
               ]}>
@@ -94,13 +112,15 @@ export function MyTabBar({state, descriptors, navigation}: any) {
                 onPress={onPress}
                 onLongPress={onLongPress}
                 style={[
-                  isPortrait()
+                  orientation === orientationEnum.portrait
                     ? styles.centerButtonWrapper
                     : styles.centerButtonWrapperLandscape,
                 ]}>
                 <Image
                   style={[
-                    isPortrait() ? styles.centerImg : styles.centerImgLandscape,
+                    orientation === orientationEnum.portrait
+                      ? styles.centerImg
+                      : styles.centerImgLandscape,
                   ]}
                   source={require('../../assets/images/homeButton.png')}
                 />
@@ -111,11 +131,25 @@ export function MyTabBar({state, descriptors, navigation}: any) {
       )}
     </View>
   );
-}
+};
+
+// Redux
+const mapStateToProps = (state: {
+  WeatherReducer: {
+    orientation: string;
+  };
+}) => {
+  const {orientation} = state.WeatherReducer;
+  return {
+    orientation,
+  };
+};
+const mapDispatchToProps = {};
+export default connect(mapStateToProps, mapDispatchToProps)(MyTabBar);
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: wp(22),
+    height: 90,
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -123,32 +157,31 @@ const styles = StyleSheet.create({
   },
   containerLandscape: {
     flexDirection: 'row',
-    height: wp(7),
+    height: 90,
     position: 'absolute',
     bottom: 0,
-    left: wp(30),
-    right: 0,
-    width: wp(40),
+    width: 340,
+    alignSelf: 'center',
   },
   tabbarImg: {
-    width: wp(100),
-    height: wp(22),
+    width: '100%',
+    height: 90,
     resizeMode: 'contain',
     position: 'absolute',
-    bottom: -wp(2),
+    bottom: -5,
   },
   tabbarImgLandscape: {
-    width: wp(40),
-    height: wp(11),
+    width: 340,
+    height: 90,
     resizeMode: 'contain',
     position: 'absolute',
-    bottom: -wp(2),
+    bottom: -15,
   },
   iconButtonWrapper: {
     flex: 1,
     // backgroundColor: 'red',
-    margin: wp(2),
-    height: wp(13),
+    margin: 10,
+    height: 50,
     alignSelf: 'flex-end',
     justifyContent: 'center',
     alignItems: 'center',
@@ -156,20 +189,20 @@ const styles = StyleSheet.create({
   iconButtonWrapperLandscape: {
     flex: 1,
     // backgroundColor: 'red',
-    margin: wp(1),
-    height: wp(6),
+    margin: 3,
+    height: 50,
     alignSelf: 'flex-end',
     justifyContent: 'center',
     alignItems: 'center',
   },
   centerImg: {
-    height: wp(17),
-    width: wp(17),
+    height: 70,
+    width: 70,
     resizeMode: 'contain',
   },
   centerImgLandscape: {
-    height: wp(7),
-    width: wp(7),
+    height: 60,
+    width: 60,
     resizeMode: 'contain',
   },
 
@@ -180,10 +213,10 @@ const styles = StyleSheet.create({
   },
   centerButtonWrapper: {
     position: 'absolute',
-    bottom: wp(6),
+    bottom: 25,
   },
   centerButtonWrapperLandscape: {
     position: 'absolute',
-    bottom: wp(2),
+    bottom: 15,
   },
 });

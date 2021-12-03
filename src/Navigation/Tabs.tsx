@@ -3,10 +3,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../pages/home/Home';
 import Overview from '../pages/overview/Overview';
 import Setting from '../pages/setting/Setting';
-import {MyTabBar} from './MyTabbar';
 import HomeHeader from './HomeHeader';
 import Statistics from '../pages/statistics/Statistics';
 import City from '../pages/city/City';
+import MyTabBar from './MyTabbar';
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
   return (

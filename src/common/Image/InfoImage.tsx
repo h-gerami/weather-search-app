@@ -1,11 +1,12 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import {CCFont, CColor, isPortrait} from '../../styles/CustomStyle';
-const InfoImage = () => {
+import {CCFont, CColor} from '../../styles/CustomStyle';
+const InfoImage = (props: {isPortrait: boolean}) => {
+  const {isPortrait} = props;
   return (
     <View
       style={{
-        flexDirection: isPortrait() ? 'column' : 'row',
+        flexDirection: isPortrait ? 'column' : 'row',
         justifyContent: 'center',
         alignItems: 'center',
         margin: 20,

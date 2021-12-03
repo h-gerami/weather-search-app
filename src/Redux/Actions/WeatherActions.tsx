@@ -1,6 +1,6 @@
 import {NETWORK_ERROR} from '../../global/Errors';
 import services from '../../global/Services';
-import {SET_ERR, SET_IS_LOADING, SET_WEATHER} from './types';
+import {SET_ERR, SET_IS_LOADING, SET_ORIENTATION, SET_WEATHER} from './types';
 
 export const set_is_loading = (loading: boolean) => {
   return {
@@ -12,6 +12,12 @@ export const set_err = (err: string) => {
   return {
     type: SET_ERR,
     payload: err,
+  };
+};
+export const set_orientation = (orientation: string) => {
+  return {
+    type: SET_ORIENTATION,
+    payload: orientation,
   };
 };
 
