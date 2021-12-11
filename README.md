@@ -2,7 +2,7 @@
 Write your city Name and Check the Weather :)
 # Features
 - Created by Typescript
-- Powerd by Hermes Engine
+- Powered by Hermes Engine
 - All UI Components are Created and there is no ui kit packages inside app
 - All net Images load lazy for best performance with react-native-fast-image
 - Errors like network are handeled and the app work well in slow network conditions with smooth scrolling
