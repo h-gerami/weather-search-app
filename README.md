@@ -1,5 +1,5 @@
 # weather-search-app
-This is a Mobile Tech Test for hipages Company
+Write your city Name and Check the Weather :)
 # Features
 - Created by Typescript
 - Powerd by Hermes Engine
